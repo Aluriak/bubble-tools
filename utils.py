@@ -1,6 +1,7 @@
 """Various functions"""
 
 import re
+import itertools as it
 from collections import defaultdict, OrderedDict
 
 
@@ -23,6 +24,26 @@ def completed_graph(graph:dict) -> dict:
             ret[node].add(succ)
             ret[succ].add(node)
     return dict(ret)
+
+
+def walk(start:list, graphs:iter) -> iter:
+    """walk on given graphs, beginning on start.
+    Yield all found nodes, including start.
+
+    All graph are understood as a single one,
+    with merged keys and values.
+
+    """
+    walked = set([start])
+    stack = [start]
+    while len(stack) > 0:
+        *stack, curr = stack
+        yield curr
+        succs = it.chain.from_iterable(graph.get(curr, ()) for graph in graphs)
+        for succ in succs:
+            if succ not in walked:
+                walked.add(curr)
+                stack.append(succ)
 
 
 def bubble_file_data(bblfile:str) -> iter:

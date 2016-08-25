@@ -18,3 +18,25 @@ def test_line_type():
     assert lt('') == 'EMPTY'
     assert lt(' # hi !') == 'COMMENT'
     assert lt(' hi !') == 'ERROR'
+
+
+def test_walk():
+    grapha = utils.completed_graph({
+        1: {11, 12, 13},
+        2: {21, 22},
+        21: {211, 212},
+    })
+    graphb = utils.completed_graph({
+        22: {3},  # introduce a loop
+        3: {1},
+        4: {5},  # introduce a connected component
+    })
+    cc = {1, 11, 12, 13, 2, 21, 22, 211, 212, 3}
+    for start in cc:
+        result = tuple(utils.walk(start, (grapha, graphb)))
+        assert len(result) == len(set(result))  # no doublon expected
+        assert set(result) == cc
+
+    result = tuple(utils.walk(5, (grapha, graphb)))
+    assert len(result) == len(set(result))  # no doublon expected
+    assert set(result) == {4, 5}
