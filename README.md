@@ -8,6 +8,9 @@ usage:
 
 Try hard to find errors and inconsistancies in the given bubble file
 
+Spot powernode overlapping and some inclusions inconsistancies.
+Profiling gives general informations about the file data.
+
 ## conversion to dot
 usage:
 
