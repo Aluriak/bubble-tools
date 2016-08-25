@@ -55,6 +55,21 @@ def walk(start:list, graphs:iter) -> iter:
                 stack.append(succ)
 
 
+def have_cycle(graph:dict) -> bool:
+    """Perform a topologic sort to detect any cycle."""
+    # topological sort
+    walked = set()  # walked nodes
+    nodes = frozenset(it.chain(it.chain.from_iterable(graph.values()), graph.keys()))  # all nodes of the graph
+    preds = reversed_graph(graph)  # succ: preds
+    last_walked_len = -1
+    while last_walked_len != len(walked):
+        last_walked_len = len(walked)
+        for node in nodes - walked:
+            if len(preds.get(node, set()) - walked) == 0:
+                walked.add(node)
+    return len(walked) != len(nodes)
+
+
 def bubble_file_data(bblfile:str) -> iter:
     """Yield data found in given bubble file"""
     yield from (line_data(line) for line in file_lines(bblfile))

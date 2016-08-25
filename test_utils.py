@@ -52,3 +52,8 @@ def test_walk():
     result = tuple(utils.walk(5, (grapha, graphb)))
     assert len(result) == len(set(result))  # no doublon expected
     assert set(result) == {4, 5}
+
+
+def test_have_cycle():
+    assert utils.have_cycle({1: {2, 3}, 2: {3}}) == False
+    assert utils.have_cycle({1: {2}, 2: {3}, 3: {1}}) == True
