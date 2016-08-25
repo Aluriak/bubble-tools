@@ -55,5 +55,5 @@ def test_walk():
 
 
 def test_have_cycle():
-    assert utils.have_cycle({1: {2, 3}, 2: {3}}) == False
-    assert utils.have_cycle({1: {2}, 2: {3}, 3: {1}}) == True
+    assert utils.have_cycle({1: {2, 3}, 2: {3}}) == set()
+    assert utils.have_cycle({1: {2}, 2: {3}, 3: {1}}) == {1, 2, 3}
