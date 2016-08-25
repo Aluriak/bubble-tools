@@ -1,0 +1,4 @@
+IN	a	p1
+IN	p1	p2
+IN	p2	p3
+IN	p3	p1
