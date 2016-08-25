@@ -1,0 +1,25 @@
+# powernode 1, and included powernode 3
+IN	a	p3
+IN	b	p3
+IN	c	p1
+IN	d	p1
+IN	p3	p1
+
+# powernode 2, and included powernode 4
+IN	e	p4
+IN	f	p4
+IN	g	p2
+IN	h	p2
+IN	p4	p2
+
+# links p4 and p3
+EDGE	p3	p4	1.0
+
+# links g and p1/p2
+EDGE	k	p1	1.0
+EDGE	k	p2	1.0
+
+# optionnal data (missing one are here to test the validator)
+NODE	k
+SET	p1	1.0
+SET	p3	1.0
