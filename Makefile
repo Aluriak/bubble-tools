@@ -13,7 +13,7 @@ v:
 
 t: tests
 tests:
-	py.test . --doctest-module
+	py.test . --doctest-module -v
 
 
 
