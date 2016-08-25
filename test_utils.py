@@ -4,6 +4,18 @@ import pytest
 import utils
 
 
+def test_completed_graph():
+    assert utils.completed_graph({1: (2, 3), 3: (1, 4, 2)}) == {
+        1: {2, 3}, 2: {1, 3}, 3: {1, 2, 4}, 4: {3}
+    }
+
+
+def test_reversed_graph():
+    assert utils.reversed_graph({1: (2, 3), 3: (1, 4, 2)}) == {
+        2: {1, 3}, 3: {1}, 4: {3}, 1: {3}
+    }
+
+
 def test_line_type():
     lt = utils.line_type
 

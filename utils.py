@@ -16,6 +16,15 @@ LINE_TYPES = OrderedDict((
 ))
 
 
+def reversed_graph(graph:dict) -> dict:
+    """Return given graph reversed"""
+    ret = defaultdict(set)
+    for node, succs in graph.items():
+        for succ in succs:
+            ret[succ].add(node)
+    return dict(ret)
+
+
 def completed_graph(graph:dict) -> dict:
     """Return given graph completed"""
     ret = defaultdict(set)
