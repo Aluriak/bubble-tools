@@ -1,0 +1,7 @@
+# powernode 1 and powernode 2 share node s
+IN	a	p1
+IN	b	p1
+IN	c	p2
+IN	d	p2
+IN	s	p1
+IN	s	p2

@@ -1,6 +1,8 @@
 
 BUBBLE=complex
 BUBBLE=basic
+BUBBLE=loop
+BUBBLE=overlap
 
 
 c:
