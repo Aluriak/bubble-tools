@@ -37,6 +37,16 @@ def from_bubble_data(bbldata:iter) -> (dict, dict, frozenset):
             assert ltype in ('COMMENT', 'EMPTY', 'ERROR')
             pass
 
+    # all pure nodes needs to be a key in inclusions
+    for node in set(it.chain.from_iterable(inclusions.values())):
+        # an element that is not in inclusion is either:
+        #  - a node not explicitely defined in a NODE line
+        #  - a powernode that contains nothing and not explicitely defined in a SET line
+        # the second case is meaningless : this is the case for any unused powernode name.
+        # Consequently, elements not in inclusions are nodes.
+        if node not in inclusions:
+            inclusions[node] = ()
+
     # find the roots
     not_root = set(contained for contained in
                    it.chain.from_iterable(inclusions.values()))
