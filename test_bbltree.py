@@ -24,7 +24,10 @@ def test_from_bubble_data():
     edges, inclusions, roots = tree
 
     assert edges == {'p2': {'k'}, 'k': {'p2', 'p1'}, 'p3': {'p4'}, 'p1': {'k'}, 'p4': {'p3'}}
-    assert inclusions == {'p2': {'h', 'g', 'p4'}, 'p3': {'a', 'b'}, 'k': (), 'p1': {'c', 'd', 'p3'}, 'p4': {'f', 'e'}}
+    assert inclusions == {'p2': {'h', 'g', 'p4'}, 'p3': {'a', 'b'},
+                          'k': (), 'p1': {'c', 'd', 'p3'},
+                          'p4': {'f', 'e'}, 'a': (), 'b': (), 'c': (),
+                          'd': (), 'e': (), 'f': (), 'g': (), 'h': ()}
     assert roots == {'p2', 'k', 'p1'}
 
     cc, subroots = bbltree.connected_components(tree)
