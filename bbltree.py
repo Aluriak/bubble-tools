@@ -10,8 +10,11 @@ def from_bubble_data(bbldata:iter) -> (dict, dict, frozenset):
     """Return dict of edges and dict of inclusion of given bubble and roots
 
     edges -- {predecessor: {successors}}
-    inclusions -- {container: {directly contained}}
+    inclusions -- {powernodes: {(power)nodes directly contained}}
     roots -- {(power)node contained by nothing}
+
+    Nodes are keys in inclusions, but with an empty tuple instead of a set.
+
     """
     # get structure as two dict
     edges, inclusions = defaultdict(set), defaultdict(set)
