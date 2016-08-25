@@ -80,3 +80,15 @@ def connected_components(tree:(dict, dict, frozenset)) -> (dict, dict):
                 if succ not in walked:
                     stack.append(succ)
     return cc, dict(subroots)
+
+
+def nodes(tree:(dict, dict, frozenset)) -> iter:
+    """Yield all nodes in the graph (not the powernodes)"""
+    _, inclusions, _ = tree
+    yield from (elem for elem, subs in inclusions.items() if subs == ())
+
+
+def powernodes(tree:(dict, dict, frozenset)) -> iter:
+    """Yield all powernodes in the graph (not the nodes)"""
+    _, inclusions, _ = tree
+    yield from (elem for elem, subs in inclusions.items() if subs != ())
