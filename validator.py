@@ -68,6 +68,12 @@ def inclusions_validation(tree:(dict, dict, frozenset)) -> iter:
                        " which are not in inclusion."
                        " Shared nodes are {}".format(
                            len(common_inc), one, two, common_inc))
+    # search for cycles
+    nodes_in_cycles = utils.have_cycle(inclusions)
+    if nodes_in_cycles:
+        yield ("ERROR cycle in inclusions: the following {}"
+               " nodes are involved: {}".format(
+                   len(nodes_in_cycles), nodes_in_cycles))
 
 
 def included(powernode:str, inclusions:dict, nodes_only=False) -> iter:
