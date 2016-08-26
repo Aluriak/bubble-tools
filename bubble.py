@@ -24,7 +24,6 @@ if __name__ == "__main__":
         for log in logs:
             print(log)
 
-
     if args['--dot']:
         lines = utils.file_lines(args['<bblfile>']),
         converter.to_dot(lines, args['<dotfile>'])
