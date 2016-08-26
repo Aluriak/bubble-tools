@@ -18,12 +18,14 @@ def from_bubble_data(bbldata:iter) -> (dict, dict, frozenset):
     """
     # get structure as two dict
     edges, inclusions = defaultdict(set), defaultdict(set)
+    used_in_edges = set()
     for line in bbldata:
         if not line: continue
         ltype, *payload = line
         if ltype == 'EDGE':
             source, target = payload
             edges[source].add(target)
+            used_in_edges.add(source)
         elif ltype == 'SET':
             setname = payload[0]
             inclusions[setname]  # create it if not already populated
@@ -36,6 +38,11 @@ def from_bubble_data(bbldata:iter) -> (dict, dict, frozenset):
         else:  # comment, empty or error
             assert ltype in ('COMMENT', 'EMPTY', 'ERROR')
             pass
+
+    # all (power)nodes used in edges should be present in inclusions tree
+    for node in used_in_edges:
+        if node not in inclusions:  # contains nothing, so its a node
+            inclusions[node] = ()
 
     # all pure nodes needs to be a key in inclusions
     for node in set(it.chain.from_iterable(inclusions.values())):
