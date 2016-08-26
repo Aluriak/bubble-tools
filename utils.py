@@ -75,11 +75,6 @@ def have_cycle(graph:dict) -> frozenset:
     return frozenset(nodes - walked)
 
 
-def bubble_file_data(bblfile:str) -> iter:
-    """Yield data found in given bubble file"""
-    yield from (line_data(line) for line in file_lines(bblfile))
-
-
 def file_lines(bblfile:str) -> iter:
     """Yield lines found in given file"""
     with open(bblfile) as fd:
