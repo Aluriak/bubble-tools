@@ -71,11 +71,15 @@ def inclusions_validation(tree:(dict, dict, frozenset)) -> iter:
                        " which are not in inclusion."
                        " Shared nodes are {}".format(
                            len(common_inc), one, two, common_inc))
-    # search for empty powernodes
     for pwn in bbltree.powernodes(tree):
+        # search for empty powernodes
         if len(inclusions[pwn]) == 0:
             yield ("WARNING empty powernode: {} is defined,"
                    " but contains nothing".format(pwn))
+        # search for singleton powernodes
+        if len(inclusions[pwn]) == 1:
+            yield ("WARNING singleton powernode: {} is defined,"
+                   " but contains only {}".format(pwn, inclusions[pwn]))
     # search for cycles
     nodes_in_cycles = utils.have_cycle(inclusions)
     if nodes_in_cycles:

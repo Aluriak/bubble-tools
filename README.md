@@ -8,7 +8,8 @@ usage:
 
 Try hard to find errors and inconsistancies in the given bubble file
 
-Spot powernode overlapping, inclusions inconsistancies and empty powernodes.
+Spot powernode overlapping, inclusions inconsistancies
+and empty or singleton powernodes.
 Profiling gives general informations about the file data.
 
 ## conversion to dot
