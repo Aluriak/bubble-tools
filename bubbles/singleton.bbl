@@ -1,0 +1,7 @@
+# a powernode containing ONLY one element
+# is a singleton. Not a big deal in theoric application,
+# but cytoscape use to ignore the powernode and put its content
+# directly. Problems are coming when you try to link
+# this inexisting powernode to something else.
+IN	a	p2
+EDGE	b	p2	1.0
