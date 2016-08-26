@@ -7,13 +7,13 @@ import bbltree
 import utils
 
 
-def validate(bblfile:str, profiling=False):
-    """Yield lines of warnings and errors about input bbl file.
+def validate(bbllines:iter, profiling=False):
+    """Yield lines of warnings and errors about input bbl lines.
 
     profiling -- yield also info lines about input bbl file.
 
     """
-    bubble = tuple(sorted(tuple(utils.file_lines(bblfile))))
+    bubble = tuple(sorted(tuple(bbllines)))
     data = tuple(utils.line_data(line) for line in bubble)
     types = tuple(utils.line_type(line) for line in bubble)
     # launch profiling
