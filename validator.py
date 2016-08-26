@@ -21,6 +21,9 @@ def validate(bbllines:iter, profiling=False):
         ltype_counts = Counter(types)
         for ltype, count in ltype_counts.items():
             yield 'INFO {} lines of type {}'.format(count, ltype)
+        yield 'INFO {} lines of payload'.format(
+            ltype_counts['EDGE'] + ltype_counts['IN'] +
+            ltype_counts['NODE'] + ltype_counts['SET'])
     # launch validation
     for errline in (l for l, t in zip(bubble, types) if t == 'ERROR'):
         yield 'ERROR line is not bubble: "{}"'.format(errline)
