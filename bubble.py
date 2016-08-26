@@ -9,6 +9,7 @@ usage:
 
 import validator
 import converter
+import utils
 
 import docopt
 
@@ -18,11 +19,12 @@ if __name__ == "__main__":
     args = docopt.docopt(__doc__)
 
     if args['--validate']:
-        logs = validator.validate(args['<bblfile>'],
+        logs = validator.validate(utils.file_lines(args['<bblfile>']),
                                   profiling=args['--profiling'])
         for log in logs:
             print(log)
 
 
     if args['--dot']:
-        converter.to_dot(args['<bblfile>'], args['<dotfile>'])
+        lines = utils.file_lines(args['<bblfile>']),
+        converter.to_dot(lines, args['<dotfile>'])
