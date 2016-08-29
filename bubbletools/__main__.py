@@ -7,12 +7,11 @@ usage:
 """
 
 
-import validator
-import converter
-import utils
-
 import docopt
 
+from bubbletools import validator
+from bubbletools import converter
+from bubbletools import utils
 
 
 if __name__ == "__main__":

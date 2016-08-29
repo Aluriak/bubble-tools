@@ -1,6 +1,6 @@
 
 
-import bbltree
+from bubbletools import bbltree
 
 def test_from_bubble_data():
     tree = bbltree.from_bubble_data((

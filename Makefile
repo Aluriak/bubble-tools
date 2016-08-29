@@ -4,16 +4,17 @@ BUBBLE=basic
 BUBBLE=loop
 BUBBLE=overlap
 
+CMD=python3 -m bubbletools
 
 v:
-	python3 bubble.py --validate bubbles/$(BUBBLE).bbl --profiling
+	$(CMD) --validate bubbles/$(BUBBLE).bbl --profiling
 c:
-	python3 bubble.py --dot bubbles/$(BUBBLE).bbl
+	$(CMD) --dot bubbles/$(BUBBLE).bbl
 
 
 t: tests
 tests:
-	py.test . --doctest-module -v
+	py.test bubbletools --doctest-module -v
 
 
 

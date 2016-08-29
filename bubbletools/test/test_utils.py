@@ -1,7 +1,8 @@
 
 
 import pytest
-import utils
+
+from bubbletools import utils
 
 
 def test_completed_graph():

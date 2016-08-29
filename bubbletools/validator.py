@@ -3,8 +3,8 @@
 import itertools as it
 from collections import Counter
 
-import bbltree
-import utils
+from bubbletools import bbltree
+from bubbletools import utils
 
 
 def validate(bbllines:iter, profiling=False):

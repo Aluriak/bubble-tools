@@ -3,7 +3,7 @@
 import itertools as it
 from collections import defaultdict
 
-import utils
+from bubbletools import utils
 
 
 def from_bubble_data(bbldata:iter) -> (dict, dict, frozenset):

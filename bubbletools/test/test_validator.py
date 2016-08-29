@@ -1,6 +1,6 @@
 
 
-import validator
+from bubbletools import validator
 
 
 def test_validate_empty_pwn():
