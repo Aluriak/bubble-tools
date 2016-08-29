@@ -20,6 +20,9 @@ def validate(bbllines:iter, *, profiling=False):
     if isinstance(bbllines, str):
         if os.path.exists(bbllines):  # filename containing bubble
             bbllines = utils.file_lines(bbllines)
+        elif '\n' not in bbllines or '\t' not in bbllines:
+            # probably a bad file name: let's rise the proper error
+            bbllines = utils.file_lines(bbllines)
         else:  # bubble itself
             bbllines = bbllines.split('\n')
     bubble = tuple(bbllines)
