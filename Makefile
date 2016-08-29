@@ -17,4 +17,20 @@ tests:
 	py.test bubbletools --doctest-module -v
 
 
+##########################################
+#### PYPI
+##########################################
+test_register:
+	python3 setup.py register -r https://testpypi.python.org/pypi
+test_upload:
+	python3 setup.py sdist upload -r https://testpypi.python.org/pypi
+test_install:
+	pip3 install -U -i https://testpypi.python.org/pypi bubbletools
 
+register:
+	python3 setup.py register
+upload:
+	python3 setup.py sdist upload
+install:
+	yes y | pip3 uninstall bubbletools
+	pip3 install bubbletools
