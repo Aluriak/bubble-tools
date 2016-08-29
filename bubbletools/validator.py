@@ -94,9 +94,9 @@ def inclusions_validation(tree:(dict, dict, frozenset)) -> iter:
     # search for cycles
     nodes_in_cycles = utils.have_cycle(inclusions)
     if nodes_in_cycles:
-        yield ("ERROR cycle in inclusions: the following {}"
+        yield ("ERROR inclusion cycle: the following {}"
                " nodes are involved: {}".format(
-                   len(nodes_in_cycles), nodes_in_cycles))
+                   len(nodes_in_cycles), set(nodes_in_cycles)))
 
 
 def included(powernode:str, inclusions:dict, nodes_only=False) -> iter:
