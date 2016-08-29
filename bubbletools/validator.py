@@ -1,5 +1,6 @@
 """Routines for bubble format validation"""
 
+import os
 import itertools as it
 from collections import Counter
 
@@ -7,13 +8,21 @@ from bubbletools import bbltree
 from bubbletools import utils
 
 
-def validate(bbllines:iter, profiling=False):
+def validate(bbllines:iter, *, profiling=False):
     """Yield lines of warnings and errors about input bbl lines.
 
     profiling -- yield also info lines about input bbl file.
 
+    If bbllines is a valid file name, it will be read.
+    Else, it should be an iterable of bubble file lines.
+
     """
-    bubble = tuple(sorted(tuple(bbllines)))
+    if isinstance(bbllines, str):
+        if os.path.exists(bbllines):  # filename containing bubble
+            bbllines = utils.file_lines(bbllines)
+        else:  # bubble itself
+            bbllines = bbllines.split('\n')
+    bubble = tuple(bbllines)
     data = tuple(utils.line_data(line) for line in bubble)
     types = tuple(utils.line_type(line) for line in bubble)
     # launch profiling
@@ -50,6 +59,8 @@ def inclusions_validation(tree:(dict, dict, frozenset)) -> iter:
     edges, inclusions, roots = tree
     # search for powernode overlapping
     for one, two in it.combinations(inclusions, 2):
+        assert len(one) == len(one.strip())
+        assert len(two) == len(two.strip())
         one_inc = set(included(one, inclusions))
         two_inc = set(included(two, inclusions))
         common_inc = one_inc & two_inc
