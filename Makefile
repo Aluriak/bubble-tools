@@ -7,9 +7,9 @@ BUBBLE=overlap
 CMD=python3 -m bubbletools
 
 v:
-	$(CMD) --validate bubbles/$(BUBBLE).bbl --profiling
+	$(CMD) validate bubbles/$(BUBBLE).bbl --profiling
 c:
-	$(CMD) --dot bubbles/$(BUBBLE).bbl
+	$(CMD) dot bubbles/$(BUBBLE).bbl
 
 
 t: tests
