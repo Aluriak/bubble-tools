@@ -1,6 +1,12 @@
 # bubble-tools
 python routines related to bubble format, usable in CLI or as a library.
 
+## TODO
+- [X] bubble to python
+- [ ] python to bubble
+- [ ] bubble to dot
+- [ ] dot to python
+
 ## CLI
 `bubble-tools` is usable through CLI.
 
