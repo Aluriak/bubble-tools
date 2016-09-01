@@ -1,11 +1,19 @@
 # bubble-tools
 python routines related to bubble format, usable in CLI or as a library.
 
+## Installation
+
+    pip install bubbletools
+
+See below for usage.
+
+
 ## TODO
 - [X] bubble to python
 - [ ] python to bubble
-- [ ] bubble to dot
+- [X] bubble to dot  (via [graphviz](http://graphviz.readthedocs.io/en/latest/))
 - [ ] dot to python
+
 
 ## CLI
 `bubble-tools` is usable through CLI.
@@ -37,8 +45,6 @@ Submodules `validator` and `converter` provides the functionnalities described a
     for log in validate(open('path/to/bubble.lp'), profiling=True):
         print(log)
     convert.to_dot(open('path/to/bubble.lp'), dotfile='path/to/dot.dot')
-
-
 
 ### python representation of the graph
 A lower level interface is the `bbltree` submodule, allowing one to manipulate the graph depicted by bubble data as python object.
