@@ -11,8 +11,13 @@ See below for usage.
 ## TODO
 - [X] bubble to python
 - [ ] python to bubble
-- [X] bubble to dot  (via [graphviz](http://graphviz.readthedocs.io/en/latest/))
+- [ ] bubble to dot  (via [graphviz](http://graphviz.readthedocs.io/en/latest/))
+    - [X] working implementation
+    - [ ] unit testing
+    - [ ] test on fully valid bubble
+    - [ ] test on big graphs, for benchmarking (will probably not scale)
 - [ ] dot to python
+- [ ] unit testing on bubble describing cliques
 
 
 ## CLI
