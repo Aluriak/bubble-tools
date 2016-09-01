@@ -35,6 +35,7 @@ usage:
     python3 bubble-tool.py dot path/to/bubble/file path/to/output/file
 
 Convert given bubble file in dot format.
+The optional `--render` flag can be used to show the graph after saving.
 
 
 ## python API
