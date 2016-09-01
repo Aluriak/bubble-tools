@@ -110,3 +110,8 @@ def line_data(line:str) -> tuple:
         if match:
             return match.groups()
     raise ValueError("Input line \"{}\" is not bubble formatted".format(line))
+
+
+def data_from_bubble(bblfilename:str) -> iter:
+    """Return data found in each line of given filename"""
+    yield from (line_data(line) for line in file_lines(bblfilename))
