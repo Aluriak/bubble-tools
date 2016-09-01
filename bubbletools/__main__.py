@@ -2,7 +2,7 @@
 
 usage:
     bubble-tool.py validate <bblfile> [--profiling]
-    bubble-tool.py dot <bblfile> [<dotfile>]
+    bubble-tool.py dot <bblfile> [<dotfile>] [--render]
 
 """
 
@@ -24,5 +24,8 @@ if __name__ == "__main__":
             print(log)
 
     if args['dot']:
-        lines = utils.file_lines(args['<bblfile>']),
-        converter.to_dot(lines, args['<dotfile>'])
+        print('Output file:', converter.bubble_to_dot(
+            args['<bblfile>'],
+            args['<dotfile>'],
+            render=args['--render']
+        ))
