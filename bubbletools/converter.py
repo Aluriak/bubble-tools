@@ -23,6 +23,7 @@ def tree_to_dot(tree:(dict, dict, frozenset), dotfile:str=None, render:bool=Fals
 
     """
     graph = tree_to_graph(tree)
+    path = None
     if dotfile:  # first save the dot file.
         path = graph.save(dotfile)
     if render:  # secondly, show it.
