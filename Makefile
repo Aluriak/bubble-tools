@@ -1,8 +1,12 @@
 
-BUBBLE=complex
-BUBBLE=basic
-BUBBLE=loop
 BUBBLE=overlap
+BUBBLE=empty_pwn
+BUBBLE=complex
+BUBBLE=loop
+BUBBLE=singleton
+BUBBLE=basic
+BUBBLE=disjoint
+
 
 CMD=python3 -m bubbletools
 
