@@ -11,7 +11,7 @@ LINE_TYPES = OrderedDict((
     (r'(IN)\t([^\t]+)\t([^\t]+)', 'IN'),
     (r'(NODE)\t([^\t]+)', 'NODE'),
     (r'\s*#.*', 'COMMENT'),
-    (r'', 'EMPTY'),
+    (r'\s*', 'EMPTY'),
     (r'.*', 'ERROR'),
 ))
 
