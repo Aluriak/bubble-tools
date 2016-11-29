@@ -3,6 +3,7 @@
 usage:
     bubble-tool.py validate <bblfile> [--profiling]
     bubble-tool.py dot <bblfile> [<dotfile>] [--render]
+    bubble-tool.py gexf <bblfile> [<gexffile>]
 
 """
 
@@ -28,4 +29,10 @@ if __name__ == "__main__":
             args['<bblfile>'],
             args['<dotfile>'],
             render=args['--render']
+        ))
+
+    if args['gexf']:
+        print('Output file:', converter.bubble_to_gexf(
+            args['<bblfile>'],
+            args['<gexffile>'],
         ))

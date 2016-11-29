@@ -16,6 +16,12 @@ LINE_TYPES = OrderedDict((
 ))
 
 
+def infer_format(filename:str) -> str:
+    """Return extension identifying format of given filename"""
+    _, ext = os.path.splitext(filename)
+    return ext
+
+
 def reversed_graph(graph:dict) -> dict:
     """Return given graph reversed"""
     ret = defaultdict(set)

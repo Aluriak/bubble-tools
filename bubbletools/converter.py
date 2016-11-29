@@ -8,11 +8,20 @@ from graphviz import Graph
 from bubbletools import bbltree
 from bubbletools import utils
 
+from bubbletools import _gexf as gexf_converter
+
 
 def bubble_to_dot(bblfile:str, dotfile:str=None, render:bool=False):
     """Write in dotfile a graph equivalent to those depicted in bubble file"""
     tree = bbltree.from_bubble_data(utils.data_from_bubble(bblfile))
     return tree_to_dot(tree, dotfile, render=render)
+
+
+def bubble_to_gexf(bblfile:str, gexffile:str=None):
+    """Write in dotfile a graph equivalent to those depicted in bubble file"""
+    tree = bbltree.from_bubble_data(utils.data_from_bubble(bblfile))
+    gexf_converter.tree_to_file(tree, gexffile)
+    return gexffile
 
 
 def tree_to_dot(tree:(dict, dict, frozenset), dotfile:str=None, render:bool=False):
