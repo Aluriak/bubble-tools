@@ -19,7 +19,7 @@ if __name__ == "__main__":
     args = docopt.docopt(__doc__)
 
     if args['validate']:
-        logs = validator.validate(utils.file_lines(args['<bblfile>']),
+        logs = validator.validate(args['<bblfile>'],
                                   profiling=args['--profiling'])
         for log in logs:
             print(log)
