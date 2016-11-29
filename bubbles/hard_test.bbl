@@ -1,0 +1,73 @@
+#BBL-1.0
+#File written by the powergrasp.info module (0.4.1)
+
+NODE	a
+NODE	e
+NODE	h
+NODE	g
+NODE	f
+NODE	i
+NODE	b
+NODE	d
+IN	f	PWRN-a-2-1
+IN	b	PWRN-a-2-1
+IN	a	PWRN-a-3-1
+IN	e	PWRN-a-3-1
+IN	i	PWRN-a-3-2
+IN	d	PWRN-a-3-2
+IN	PWRN-a-2-1	PWRN-a-1-1
+IN	PWRN-a-3-2	PWRN-a-1-1
+IN	PWRN-a-3-1	PWRN-a-1-1
+IN	g	PWRN-a-2-2
+IN	h	PWRN-a-2-2
+EDGE	g	h	1.0
+EDGE	PWRN-a-2-1	PWRN-a-2-2	1.0
+EDGE	PWRN-a-1-1	c	1.0
+EDGE	PWRN-a-3-1	PWRN-a-3-2	1.0
+NODE	YBL087C
+NODE	YNL069C
+NODE	YGL031C
+NODE	YIL133C
+NODE	YOR063W
+NODE	YNL067W
+NODE	YER117W
+NODE	YGR148C
+NODE	YGL147C
+IN	PWRN-YBL087C-4-1	PWRN-YBL087C-2-2
+IN	YER117W	PWRN-YBL087C-3-1
+IN	YBL087C	PWRN-YBL087C-3-1
+IN	PWRN-YBL087C-3-1	PWRN-YBL087C-2-1
+IN	YOR063W	PWRN-YBL087C-1-1
+IN	YNL067W	PWRN-YBL087C-1-1
+IN	YGL147C	PWRN-YBL087C-1-1
+IN	YGR148C	PWRN-YBL087C-4-1
+IN	YGL031C	PWRN-YBL087C-4-1
+IN	YIL133C	PWRN-YBL087C-1-2
+IN	YNL069C	PWRN-YBL087C-1-2
+EDGE	PWRN-YBL087C-1-1	PWRN-YBL087C-1-2	1.0
+EDGE	PWRN-YBL087C-2-1	PWRN-YBL087C-2-2	1.0
+EDGE	PWRN-YBL087C-3-1	YOR063W	1.0
+EDGE	PWRN-YBL087C-4-1	YOR063W	1.0
+EDGE	YGL147C	YNL067W	1.0
+# All cc have been performed in 0.319s. (including extraction in 0.318)
+# Extraction configuration: 
+# 	files   : findbestclique, preprocessing, postprocessing
+# 	grounder: 
+# 	solver  :  --heuristic=Vsids --configuration=frumpy 
+# Find best clique configuration: 
+# 	files   : findbestbiclique, preprocessing, postprocessing
+# 	grounder: 
+# 	solver  :  --heuristic=Vsids --configuration=frumpy 
+# Find best biclique configuration: 
+# 	files   : extract
+# 	grounder: 
+# 	solver  :  --heuristic=Vsids --configuration=frumpy -n 0
+# Now, statistics on abnormal:
+# 	initial_edge_count: 30
+# 	poweredge_count: 7
+# 	powernode_count: 9
+# 	conversion_rate: 2.3333333333333335
+# 	edge_reduction: 70.0
+# 	compression_ratio: 3.3333333333333335
+# 	remain_edge_count: 2
+# 	compressed_edge_count: 28

@@ -1,11 +1,17 @@
+# Options
+RENDER=--render
+TO=dot
+TO=gexf
 
+# TARGET
 BUBBLE=overlap
 BUBBLE=empty_pwn
-BUBBLE=complex
 BUBBLE=loop
 BUBBLE=singleton
-BUBBLE=basic
+BUBBLE=complex
 BUBBLE=disjoint
+BUBBLE=basic
+BUBBLE=hard_test
 
 
 CMD=python3 -m bubbletools
@@ -13,12 +19,16 @@ CMD=python3 -m bubbletools
 v:
 	$(CMD) validate bubbles/$(BUBBLE).bbl --profiling
 c:
-	$(CMD) dot bubbles/$(BUBBLE).bbl
+	$(CMD) dot bubbles/$(BUBBLE).bbl output/$(BUBBLE).dot $(RENDER)
+d:
+	$(CMD) dot bubbles/$(BUBBLE).bbl output/$(BUBBLE).dot $(RENDER)
+g:
+	$(CMD) gexf bubbles/$(BUBBLE).bbl output/$(BUBBLE).gexf
 
 
 t: tests
 tests:
-	py.test bubbletools --doctest-module -v
+	pytest bubbletools/ --doctest-module -v
 
 
 ##########################################
