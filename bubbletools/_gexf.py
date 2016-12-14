@@ -15,14 +15,14 @@ GEXF_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
 """
 
 
-def tree_to_file(tree:(dict, dict, frozenset), outfile:str):
+def tree_to_file(tree:'BubbleTree', outfile:str):
     """Compute the gexf representation of given power graph,
     and push it into given file."""
     with open(outfile, 'w') as fd:
-        fd.write(tree_to_xml(tree))
+        fd.write(tree_to_gexf(tree))
 
 
-def tree_to_xml(tree:(dict, dict, frozenset)) -> str:
+def tree_to_gexf(tree:'BubbleTree') -> str:
     """Compute the gexf representation of given power graph,
     and push it into given file.
 
@@ -30,15 +30,14 @@ def tree_to_xml(tree:(dict, dict, frozenset)) -> str:
     for format doc.
 
     """
-    edges, inclusions, roots = tree
     output_nodes, output_edges = '', ''
 
     def build_node(node:str) -> str:
         """Yield strings describing given node, recursively"""
-        if inclusions[node]:  # it's a powernode
+        if tree.inclusions[node]:  # it's a powernode
             yield '<node id="{}" label="{}">'.format(node, node)
             yield '<nodes>'
-            for sub in inclusions[node]:
+            for sub in tree.inclusions[node]:
                 yield from build_node(sub)
             yield '</nodes>'
             yield '</node>'
@@ -47,10 +46,10 @@ def tree_to_xml(tree:(dict, dict, frozenset)) -> str:
         return
 
     # build full hierarchy from the roots
-    output_nodes += '\n'.join('\n'.join(build_node(root)) for root in roots)
+    output_nodes += '\n'.join('\n'.join(build_node(root)) for root in tree.roots)
 
     # # add the edges to the final graph
-    for idx, (source, targets) in enumerate(edges.items()):
+    for idx, (source, targets) in enumerate(tree.edges.items()):
         for target in targets:
             if source <= target:  # edges dict is complete. This avoid multiple edges.
                 output_edges += '<edge id="{}" source="{}" target="{}" />\n'.format(idx, source, target)
