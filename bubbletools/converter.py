@@ -3,7 +3,7 @@
 
 import os
 
-from graphviz import Graph
+from graphviz import Graph, Digraph
 
 from bubbletools.bbltree import BubbleTree
 from bubbletools import utils
@@ -45,16 +45,20 @@ def tree_to_dot(tree:BubbleTree, dotfile:str=None, render:bool=False):
     return path
 
 
-def tree_to_graph(bbltree:BubbleTree) -> Graph:
+def tree_to_graph(bbltree:BubbleTree) -> Graph or Digraph:
     """Compute as a graphviz.Graph instance the given graph.
+
+    If given BubbleTree instance is oriented, returned value
+    is a graphviz.Digraph.
 
     See http://graphviz.readthedocs.io/en/latest/examples.html#cluster-py
     for graphviz API
 
     """
+    GraphObject = Digraph if bbltree.oriented else Graph
     def create(name:str):
         """Return a graphviz graph figurating a powernode"""
-        ret = Graph('cluster_' + name)
+        ret = GraphObject('cluster_' + name)
         # dirty hack to get links between clusters: add a blank node inside
         # so the subgraph don't take it's name directly, but the blank node do.
         # ret.body.append('label = "{}"'.format(name))  # replaced by:
@@ -66,10 +70,10 @@ def tree_to_graph(bbltree:BubbleTree) -> Graph:
         ret.body.append('penwidth=2')
         ret.body.append('pencolor=black')
         return ret
-    nodes = frozenset(bbltree.nodes)
+    nodes = frozenset(bbltree.nodes())
     subgraphs = {}
     # build for each powernode the associated subgraph, and add its successors
-    for powernode in bbltree.powernodes:
+    for powernode in bbltree.powernodes():
         if powernode not in subgraphs:
             subgraphs[powernode] = create(powernode)
         for succ in bbltree.inclusions[powernode]:
@@ -84,7 +88,7 @@ def tree_to_graph(bbltree:BubbleTree) -> Graph:
             if succ not in nodes:
                 subgraphs[powernode].subgraph(subgraphs[succ])
     # build the final graph by adding to it subgraphs of roots
-    graph = Graph('graph', graph_attr={'compound': 'true'})
+    graph = GraphObject('graph', graph_attr={'compound': 'true'})
     for root in bbltree.roots:
         if root in subgraphs:
             graph.subgraph(subgraphs[root])
