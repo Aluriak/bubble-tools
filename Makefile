@@ -1,5 +1,6 @@
 # Options
 RENDER=--render
+ORIENTED=--oriented
 TO=dot
 TO=gexf
 
@@ -15,15 +16,14 @@ BUBBLE=hard_test
 
 
 CMD=python3 -m bubbletools
+OPT=$(RENDER) $(ORIENTED)
 
-v:
+validate:
 	$(CMD) validate bubbles/$(BUBBLE).bbl --profiling
-c:
-	$(CMD) dot bubbles/$(BUBBLE).bbl output/$(BUBBLE).dot $(RENDER)
-d:
-	$(CMD) dot bubbles/$(BUBBLE).bbl output/$(BUBBLE).dot $(RENDER)
-g:
-	$(CMD) gexf bubbles/$(BUBBLE).bbl output/$(BUBBLE).gexf
+dot:
+	$(CMD) dot bubbles/$(BUBBLE).bbl output/$(BUBBLE).dot $(OPT)
+gexf:
+	$(CMD) gexf bubbles/$(BUBBLE).bbl output/$(BUBBLE).gexf $(ORIENTED)
 
 
 t: tests
