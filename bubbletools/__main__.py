@@ -2,8 +2,8 @@
 
 usage:
     bubble-tool.py validate <bblfile> [--profiling]
-    bubble-tool.py dot <bblfile> [<dotfile>] [--render]
-    bubble-tool.py gexf <bblfile> [<gexffile>]
+    bubble-tool.py dot <bblfile> [<dotfile>] [--render] [--oriented]
+    bubble-tool.py gexf <bblfile> [<gexffile>] [--oriented]
 
 """
 
@@ -28,11 +28,13 @@ if __name__ == "__main__":
         print('Output file:', converter.bubble_to_dot(
             args['<bblfile>'],
             args['<dotfile>'],
-            render=args['--render']
+            render=args['--render'],
+            oriented=args['--oriented']
         ))
 
     if args['gexf']:
         print('Output file:', converter.bubble_to_gexf(
             args['<bblfile>'],
             args['<gexffile>'],
+            oriented=args['--oriented']
         ))
