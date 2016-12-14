@@ -3,7 +3,7 @@
 
 GEXF_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
 <gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
-     <graph mode="static" defaultedgetype="undirected">
+     <graph mode="static" defaultedgetype="{}">
         <nodes>
             {}
         </nodes>
@@ -54,4 +54,8 @@ def tree_to_gexf(tree:'BubbleTree') -> str:
             if source <= target:  # edges dict is complete. This avoid multiple edges.
                 output_edges += '<edge id="{}" source="{}" target="{}" />\n'.format(idx, source, target)
 
-    return GEXF_TEMPLATE.format(output_nodes, output_edges)
+    return GEXF_TEMPLATE.format(
+        'directed' if tree.oriented else 'undirected',
+        output_nodes,
+        output_edges
+    )
