@@ -4,7 +4,7 @@ import os
 import itertools as it
 from collections import Counter
 
-from bubbletools import bbltree
+from bubbletools.bbltree import BubbleTree
 from bubbletools import utils
 
 
@@ -39,33 +39,29 @@ def validate(bbllines:iter, *, profiling=False):
     # launch validation
     for errline in (l for l, t in zip(bubble, types) if t == 'ERROR'):
         yield 'ERROR line is not bubble: "{}"'.format(errline)
-    tree = bbltree.from_bubble_data(data)
-    edges, inclusions, roots = tree
-    # print('edges:', edges)
-    # print('roots:', roots)
-    cc, subroots = bbltree.connected_components(tree)
+    tree = BubbleTree.from_bubble_data(data)
+    cc, subroots = tree.connected_components()
     # print('cc:', cc)
     # print('subroots:', subroots)
     if profiling:
-        yield 'INFO {} top (power)nodes'.format(len(roots))
+        yield 'INFO {} top (power)nodes'.format(len(tree.roots))
         yield 'INFO {} connected components'.format(len(cc))
         yield 'INFO {} nodes are defined, {} are used'.format(
-            ltype_counts['NODE'], len(tuple(bbltree.nodes(tree))))
+            ltype_counts['NODE'], len(tuple(tree.nodes())))
         yield 'INFO {} powernodes are defined, {} are used'.format(
-            ltype_counts['SET'], len(tuple(bbltree.powernodes(tree))))
+            ltype_counts['SET'], len(tuple(tree.powernodes())))
 
     yield from inclusions_validation(tree)
 
 
-def inclusions_validation(tree:(dict, dict, frozenset)) -> iter:
+def inclusions_validation(tree:BubbleTree) -> iter:
     """Yield message about inclusions inconsistancies"""
-    edges, inclusions, roots = tree
     # search for powernode overlapping
-    for one, two in it.combinations(inclusions, 2):
+    for one, two in it.combinations(tree.inclusions, 2):
         assert len(one) == len(one.strip())
         assert len(two) == len(two.strip())
-        one_inc = set(included(one, inclusions))
-        two_inc = set(included(two, inclusions))
+        one_inc = set(included(one, tree.inclusions))
+        two_inc = set(included(two, tree.inclusions))
         common_inc = one_inc & two_inc
         if len(common_inc) == one_inc:
             if not two in one_inc:
@@ -85,17 +81,17 @@ def inclusions_validation(tree:(dict, dict, frozenset)) -> iter:
                        " which are not in inclusion."
                        " Shared nodes are {}".format(
                            len(common_inc), one, two, common_inc))
-    for pwn in bbltree.powernodes(tree):
+    for pwn in tree.powernodes():
         # search for empty powernodes
-        if len(inclusions[pwn]) == 0:
+        if len(tree.inclusions[pwn]) == 0:
             yield ("WARNING empty powernode: {} is defined,"
                    " but contains nothing".format(pwn))
         # search for singleton powernodes
-        if len(inclusions[pwn]) == 1:
+        if len(tree.inclusions[pwn]) == 1:
             yield ("WARNING singleton powernode: {} is defined,"
-                   " but contains only {}".format(pwn, inclusions[pwn]))
+                   " but contains only {}".format(pwn, tree.inclusions[pwn]))
     # search for cycles
-    nodes_in_cycles = utils.have_cycle(inclusions)
+    nodes_in_cycles = utils.have_cycle(tree.inclusions)
     if nodes_in_cycles:
         yield ("ERROR inclusion cycle: the following {}"
                " nodes are involved: {}".format(
