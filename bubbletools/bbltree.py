@@ -75,6 +75,15 @@ class BubbleTree:
 
 
     @staticmethod
+    def from_bubble_file(bblfile:str, oriented:bool=False) -> 'BubbleTree':
+        """Extract data from given bubble file,
+        then call from_bubble_data method
+        """
+        return BubbleTree.from_bubble_data(utils.data_from_bubble(bblfile),
+                                           oriented=bool(oriented))
+
+
+    @staticmethod
     def from_bubble_data(bbldata:iter, oriented:bool=False) -> 'BubbleTree':
         """Return dict of edges and dict of inclusion of given bubble and roots
 

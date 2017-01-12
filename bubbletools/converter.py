@@ -14,15 +14,13 @@ from bubbletools import _gexf as gexf_converter
 def bubble_to_dot(bblfile:str, dotfile:str=None, render:bool=False,
                   oriented:bool=False):
     """Write in dotfile a graph equivalent to those depicted in bubble file"""
-    tree = BubbleTree.from_bubble_data(utils.data_from_bubble(bblfile),
-                                       oriented=bool(oriented))
+    tree = BubbleTree.from_bubble_file(bblfile, oriented=bool(oriented))
     return tree_to_dot(tree, dotfile, render=render)
 
 
 def bubble_to_gexf(bblfile:str, gexffile:str=None, oriented:bool=False):
     """Write in dotfile a graph equivalent to those depicted in bubble file"""
-    tree = BubbleTree.from_bubble_data(utils.data_from_bubble(bblfile),
-                                       oriented=bool(oriented))
+    tree = BubbleTree.from_bubble_file(bblfile, oriented=bool(oriented))
     gexf_converter.tree_to_file(tree, gexffile)
     return gexffile
 
