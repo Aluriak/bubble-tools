@@ -11,10 +11,11 @@ See below for usage.
 ## TODO
 - [X] bubble to python
 - [ ] python to bubble
+- [X] bubble to [gexf](https://gephi.org/gexf/format/)
 - [ ] bubble to dot  (via [graphviz](http://graphviz.readthedocs.io/en/latest/))
     - [X] working implementation
     - [ ] unit testing
-    - [ ] test on fully valid bubble
+    - [X] test on fully valid bubble
     - [ ] test on big graphs, for benchmarking (will probably not scale)
 - [ ] dot to python
 - [ ] unit testing on bubble describing cliques
@@ -57,8 +58,7 @@ A lower level interface is the `bbltree` submodule, allowing one to manipulate t
 
     from bubbletools import bbltree
 
-    tree = bbltree.from_bubble_data(open('path/to/bubble.lp'))
-    edges, inclusions, roots = tree
+    edges, inclusions, roots = bbltree.from_bubble_data(open('path/to/bubble.lp'))
 
 `edges` is a mapping `predecessor -> set of successors`,
 `inclusions` is a mapping `(power)node -> set of (power)nodes directly contained`,
