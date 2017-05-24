@@ -4,13 +4,17 @@
 
 
 import itertools as it
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 
 from bubbletools import utils
 
 
+# Powernode data aggregation
+Powernode = namedtuple('Powernode', 'size contained contained_pnodes contained_nodes')
+
+
 class BubbleTree:
-    """Model of a powergraph, that can eventually be oriented.
+    """Model of a power graph, that can eventually be oriented.
 
     """
 
@@ -62,6 +66,29 @@ class BubbleTree:
                     if succ not in walked:
                         stack.append(succ)
         return cc, dict(subroots)
+
+
+    def assert_powernode(self, name:str) -> None or ValueError:
+        """Do nothing if given name refers to a powernode in given graph.
+        Raise a ValueError in any other case.
+
+        """
+        if name not in self.inclusions:
+            raise ValueError("Powernode '{}' does not exists.".format(name))
+        if self.is_node(name):
+            raise ValueError("Given name '{}' is a node.".format(name))
+
+
+    def powernode_data(self, name:str) -> Powernode:
+        """Return a Powernode object describing the given powernode"""
+        self.assert_powernode(name)
+        contained_nodes = frozenset(self.nodes_in(name))
+        return Powernode(
+            size=len(contained_nodes),
+            contained=frozenset(self.all_in(name)),
+            contained_pnodes=frozenset(self.powernodes_in(name)),
+            contained_nodes=contained_nodes,
+        )
 
 
     def nodes(self) -> iter:
