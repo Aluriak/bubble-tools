@@ -54,21 +54,36 @@ Submodules `validator` and `converter` provides the functionnalities described a
     convert.to_dot(open('path/to/bubble.lp'), dotfile='path/to/dot.dot')
 
 ### python representation of the graph
-A lower level interface is the `bbltree` submodule, allowing one to manipulate the graph depicted by bubble data as python object.
+A lower level interface is the `BubbleTree` object, allowing one to manipulate the graph depicted by bubble data as python object.
+See [unit tests](bubbletools/test/test_bbltree.py) for example of `BubbleTree` usage.
 
-    from bubbletools import bbltree
+    from bubbletools import BubbleTree
 
-    edges, inclusions, roots = bbltree.from_bubble_data(open('path/to/bubble.lp'))
+    tree = BubbleTree.from_bubble_file('path/to/bubble.lp')
+    print(tree.edges, tree.inclusions, tree.roots)
 
 `edges` is a mapping `predecessor -> set of successors`,
 `inclusions` is a mapping `(power)node -> set of (power)nodes directly contained`,
 and `roots` is a set of (power)nodes that are contained by nothing.
 
 This representation holds all the data necessary for most work on the bubble.
-The `bbltree.connected_components` function maps a graph with its connected components:
+The `BubbleTree.connected_components` function maps a graph with its connected components:
 
-    cc, subroots = bbltree.connected_components(tree)
+    cc, subroots = BubbleTree.connected_components()
 
-Where `cc` and `subroots` are both mapping, respectively linking *the* root of a connected component with all nodes of the connected component,
+Where `cc` and `subroots` are both mappings, respectively linking *the* root of a connected component with all nodes of the connected component,
 and *the* root of a connected component with the other roots of the same connected component.
 Thus, connected components are identified by one of their roots, which is key is both dictionaries.
+
+
+### access powernodes and their data
+Follow an example of `BubbleTree` usage, retrieving data on powernodes:
+
+    tree = BubbleTree.from_bubble_file('bubbles/basic.bbl')
+    for pnode in tree.powernodes:
+        data = tree.powernode_data(pnode)
+        print(
+            "{} contains nodes {{{}}}, and powernodes {{{}}}."
+            "".format(pnode, data.contained_nodes, data.contained_pnodes)
+        )
+
