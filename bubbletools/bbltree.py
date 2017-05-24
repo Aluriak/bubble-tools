@@ -177,7 +177,7 @@ class BubbleTree:
         Nodes are keys in inclusions, but with an empty tuple instead of a set.
 
         """
-        # get structure as two dict
+        # get structure as two dicts
         edges, inclusions = defaultdict(set), defaultdict(set)
         used_in_edges = set()
         for line in bbldata:
@@ -217,10 +217,10 @@ class BubbleTree:
                 inclusions[node] = ()
 
         # find the roots
-        not_root = set(contained for contained in
-                       it.chain.from_iterable(inclusions.values()))
-        roots = frozenset(set(inclusions.keys()) - not_root)
+        not_root = set(it.chain.from_iterable(inclusions.values()))
+        roots = frozenset(frozenset(inclusions.keys()) - not_root)
 
+        # build the (oriented) bubble tree
         if not oriented:
             edges = utils.completed_graph(edges)
         return BubbleTree(edges=edges, inclusions=dict(inclusions),
