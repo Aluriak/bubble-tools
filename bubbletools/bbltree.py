@@ -73,6 +73,27 @@ class BubbleTree:
         """Yield all powernodes in the graph (not the nodes)"""
         yield from (elem for elem, subs in self.inclusions.items() if subs != ())
 
+    def is_powernode(self, identifier:str) -> bool:
+        """True if given identifier is a powernode inside the power graph"""
+        return self.inclusions[identifier] != ()
+
+    def is_node(self, identifier:str) -> bool:
+        """True if given identifier is a node inside the power graph"""
+        return self.inclusions[identifier] == ()
+
+    def nodes_in(self, name):
+        """Yield all nodes contained in given (power) node"""
+        yield from (node for node in self.all_in(name) if self.is_node(node))
+
+    def powernodes_in(self, name):
+        """Yield all power nodes contained in given (power) node"""
+        yield from (node for node in self.all_in(name) if self.is_powernode(node))
+
+    def all_in(self, name):
+        """Yield all (power) nodes contained in given (power) node"""
+        for elem in self.inclusions[name]:
+            yield elem
+            yield from self.all_in(elem)
 
     @staticmethod
     def from_bubble_file(bblfile:str, oriented:bool=False) -> 'BubbleTree':
