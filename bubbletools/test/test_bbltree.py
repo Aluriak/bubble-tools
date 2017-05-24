@@ -47,6 +47,11 @@ def test_powernode_data(powergraph):
     assert data.contained_nodes == {'h', 'g', 'f', 'e'}
 
 
+def test_powernodes_containing(powergraph):
+    assert set(powergraph.powernodes_containing('f')) == {'p2', 'p4'}
+    assert set(powergraph.powernodes_containing('h')) == {'p2'}
+
+
 def test_no_powernode_data(powergraph):
     with pytest.raises(ValueError):
         powergraph.powernode_data('k')

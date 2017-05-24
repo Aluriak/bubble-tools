@@ -3,6 +3,7 @@
 """
 
 
+import functools
 import itertools as it
 from collections import defaultdict, namedtuple
 
@@ -121,6 +122,34 @@ class BubbleTree:
         for elem in self.inclusions[name]:
             yield elem
             yield from self.all_in(elem)
+
+
+    def powernodes_containing(self, name, directly=False) -> iter:
+        """Yield all power nodes containing (power) node of given *name*.
+
+        If *directly* is True, will only yield the direct parent of given name.
+
+        """
+        if directly:
+            yield from (node for node in self.all_in(name)
+                        if name in self.inclusions[node])
+        else:
+            # This algorithm is very bad. Inverting the inclusion dict could
+            #  be far better.
+            @functools.lru_cache(maxsize=self.node_number(count_pnode=True))
+            def contains_target(node, target):
+                succs = self.inclusions[node]
+                if target in succs:
+                    return True
+                else:
+                    return any(contains_target(succ, target) for succ in succs)
+            # populate the cache
+            for root in self.roots:
+                contains_target(root, name)
+            # output all that contains target at some level
+            yield from (node for node in self.inclusions.keys()
+                        if contains_target(node, name))
+
 
     @staticmethod
     def from_bubble_file(bblfile:str, oriented:bool=False) -> 'BubbleTree':
