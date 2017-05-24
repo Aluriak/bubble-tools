@@ -92,10 +92,17 @@ class BubbleTree:
         )
 
 
+    def node_number(self, *, count_pnode=True) -> int:
+        """Return the number of node"""
+        nb_node = sum(1 for n in self.nodes())
+        if count_pnode:
+            nb_node += sum(1 for n in self.powernodes())
+        return nb_node
+
+
     def nodes(self) -> iter:
         """Yield all nodes in the graph (not the powernodes)"""
         yield from (elem for elem, subs in self.inclusions.items() if subs == ())
-
 
     def powernodes(self) -> iter:
         """Yield all powernodes in the graph (not the nodes)"""
@@ -109,15 +116,15 @@ class BubbleTree:
         """True if given identifier is a node inside the power graph"""
         return self.inclusions[identifier] == ()
 
-    def nodes_in(self, name):
+    def nodes_in(self, name) -> iter:
         """Yield all nodes contained in given (power) node"""
         yield from (node for node in self.all_in(name) if self.is_node(node))
 
-    def powernodes_in(self, name):
+    def powernodes_in(self, name) -> iter:
         """Yield all power nodes contained in given (power) node"""
         yield from (node for node in self.all_in(name) if self.is_powernode(node))
 
-    def all_in(self, name):
+    def all_in(self, name) -> iter:
         """Yield all (power) nodes contained in given (power) node"""
         for elem in self.inclusions[name]:
             yield elem
