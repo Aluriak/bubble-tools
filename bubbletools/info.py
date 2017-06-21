@@ -1,2 +1,2 @@
 PACKAGE_NAME = 'bubbletools'
-PACKAGE_VERSION = '0.5.1'
+PACKAGE_VERSION = '0.5.2'
