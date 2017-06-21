@@ -199,13 +199,24 @@ class BubbleTree:
 
 
     @staticmethod
+    def from_bubble_lines(bbllines:iter, oriented:bool=False) -> 'BubbleTree':
+        """Return a BubbleTree instance.
+
+        bbllines -- iterable of raw line, bubble-formatted
+        oriented -- True: returned BubbleTree is oriented
+
+        """
+        return BubbleTree.from_bubble_data((utils.line_data(line)
+                                            for line in bbllines),
+                                           oriented=bool(oriented))
+
+
+    @staticmethod
     def from_bubble_data(bbldata:iter, oriented:bool=False) -> 'BubbleTree':
-        """Return dict of edges and dict of inclusion of given bubble and roots
+        """Return a BubbleTree instance.
 
         bbldata -- lines in bubble bbltree
         oriented -- True: returned BubbleTree is oriented
-
-        Nodes are keys in inclusions, but with an empty tuple instead of a set.
 
         """
         # get structure as two dicts
