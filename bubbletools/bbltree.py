@@ -240,8 +240,12 @@ class BubbleTree:
                 contained, container = payload
                 inclusions[container].add(contained)
             else:  # comment, empty or error
-                assert ltype in ('COMMENT', 'EMPTY', 'ERROR')
-                pass
+                if ltype not in {'COMMENT', 'EMPTY', 'ERROR'}:
+                    raise ValueError("The following line is not a valid "
+                                     "type ({}): '{}'".format(ltype, payload))
+                else:  # it's a comment, an empty line or an error
+                    pass
+
 
         # all (power)nodes used in edges should be present in inclusions tree
         for node in used_in_edges:
