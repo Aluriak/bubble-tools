@@ -46,6 +46,10 @@ def test_powernode_data(powergraph):
     assert data.contained_pnodes == {'p4'}
     assert data.contained_nodes == {'h', 'g', 'f', 'e'}
 
+def test_powergraph_reduction(powergraph):
+    assert powergraph.edge_reduction == 0.75
+    assert powergraph.init_edge_number() == 12
+    assert powergraph.edge_number() == 3
 
 def test_powernodes_containing(powergraph):
     assert set(powergraph.powernodes_containing('f')) == {'p2', 'p4'}

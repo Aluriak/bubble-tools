@@ -24,6 +24,26 @@ class BubbleTree:
         self._edges, self._inclusions = dict(edges), dict(inclusions)
         self._roots = frozenset(roots)
         self._oriented = bool(oriented)
+        self._edge_reduction = None  # computed on time
+
+    def compute_edge_reduction(self) -> float:
+        """Compute the edge reduction. Costly computation"""
+        nb_init_edge = self.init_edge_number()
+        nb_poweredge = self.edge_number()
+        return (nb_init_edge - nb_poweredge) / (nb_init_edge)
+
+    def init_edge_number(self) -> int:
+        """Return the number of edges present in the non-compressed graph"""
+        return len(frozenset(frozenset(edge) for edge in self.initial_edges()))
+
+    def initial_edges(self) -> iter:
+        """Yield edges in the initial (uncompressed) graphs. Possible doublons."""
+        nodes_in = lambda n: ([n] if self.is_node(n) else self.nodes_in(n))
+        for node, succs in self.edges.items():
+            twos = tuple(two for succ in succs for two in nodes_in(succ))
+            for one in nodes_in(node):
+                for two in twos:
+                    yield one, two
 
     @property
     def oriented(self) -> bool:
@@ -40,6 +60,12 @@ class BubbleTree:
     @property
     def roots(self) -> frozenset:
         return self._roots
+
+    @property
+    def edge_reduction(self) -> int:
+        if self._edge_reduction is None:
+            self._edge_reduction = self.compute_edge_reduction()
+        return self._edge_reduction
 
 
     def connected_components(self) -> (dict, dict):
@@ -94,11 +120,16 @@ class BubbleTree:
 
     def node_number(self, *, count_pnode=True) -> int:
         """Return the number of node"""
-        nb_node = sum(1 for n in self.nodes())
-        if count_pnode:
-            nb_node += sum(1 for n in self.powernodes())
-        return nb_node
+        return (sum(1 for n in self.nodes())
+                + (sum(1 for n in self.powernodes()) if count_pnode else 0))
 
+    def edge_number(self) -> int:
+        """Return the number of (power) edges"""
+        edges = set()
+        for node, succs in self.edges.items():
+            for succ in succs:
+                edges.add(frozenset((node, succ)))
+        return len(edges)
 
     def nodes(self) -> iter:
         """Yield all nodes in the graph (not the powernodes)"""
