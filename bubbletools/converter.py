@@ -9,6 +9,7 @@ from bubbletools.bbltree import BubbleTree
 from bubbletools import utils
 
 from bubbletools import _gexf as gexf_converter
+from bubbletools import _bubble as bubble_converter
 
 
 def bubble_to_dot(bblfile:str, dotfile:str=None, render:bool=False,
@@ -23,6 +24,13 @@ def bubble_to_gexf(bblfile:str, gexffile:str=None, oriented:bool=False):
     tree = BubbleTree.from_bubble_file(bblfile, oriented=bool(oriented))
     gexf_converter.tree_to_file(tree, gexffile)
     return gexffile
+
+
+def tree_to_bubble(tree:BubbleTree, bubblefile:str=None):
+    """Write the graph in bubble-formatted file.
+
+    """
+    bubble_converter.tree_to_file(tree, bubblefile)
 
 
 def tree_to_dot(tree:BubbleTree, dotfile:str=None, render:bool=False):
