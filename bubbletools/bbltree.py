@@ -189,6 +189,12 @@ class BubbleTree:
                         if contains_target(node, name))
 
 
+    def write_bubble(self, filename:str):
+        """Write in given filename the lines of bubble describing this instance"""
+        from bubbletools import converter
+        converter.tree_to_bubble(self, filename)
+
+
     @staticmethod
     def from_bubble_file(bblfile:str, oriented:bool=False) -> 'BubbleTree':
         """Extract data from given bubble file,
