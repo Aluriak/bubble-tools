@@ -20,11 +20,12 @@ class BubbleTree:
     """
 
     def __init__(self, edges:dict, inclusions:dict, roots:frozenset,
-                 oriented:bool=False):
+                 oriented:bool=False, symmetric_edges:bool=False):
         self._edges, self._inclusions = dict(edges), dict(inclusions)
         self._roots = frozenset(roots)
         self._oriented = bool(oriented)
         self._edge_reduction = None  # computed on time
+        self.symmetric_edges = bool(symmetric_edges)
 
     def compute_edge_reduction(self) -> float:
         """Compute the edge reduction. Costly computation"""
@@ -218,7 +219,8 @@ class BubbleTree:
 
 
     @staticmethod
-    def from_bubble_data(bbldata:iter, oriented:bool=False) -> 'BubbleTree':
+    def from_bubble_data(bbldata:iter, oriented:bool=False,
+                         symmetric_edges:bool=True) -> 'BubbleTree':
         """Return a BubbleTree instance.
 
         bbldata -- lines in bubble bbltree
@@ -273,7 +275,8 @@ class BubbleTree:
         roots = frozenset(frozenset(inclusions.keys()) - not_root)
 
         # build the (oriented) bubble tree
-        if not oriented:
+        symmetric_edges = symmetric_edges and not oriented
+        if symmetric_edges:
             edges = utils.completed_graph(edges)
         return BubbleTree(edges=edges, inclusions=dict(inclusions),
-                          roots=roots, oriented=oriented)
+                          roots=roots, oriented=oriented, symmetric_edges=symmetric_edges)
