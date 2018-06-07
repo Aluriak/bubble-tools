@@ -197,16 +197,19 @@ class BubbleTree:
 
 
     @staticmethod
-    def from_bubble_file(bblfile:str, oriented:bool=False) -> 'BubbleTree':
+    def from_bubble_file(bblfile:str, oriented:bool=False,
+                          symmetric_edges:bool=True) -> 'BubbleTree':
         """Extract data from given bubble file,
         then call from_bubble_data method
         """
         return BubbleTree.from_bubble_data(utils.data_from_bubble(bblfile),
-                                           oriented=bool(oriented))
+                                           oriented=bool(oriented),
+                                           symmetric_edges=symmetric_edges)
 
 
     @staticmethod
-    def from_bubble_lines(bbllines:iter, oriented:bool=False) -> 'BubbleTree':
+    def from_bubble_lines(bbllines:iter, oriented:bool=False,
+                          symmetric_edges:bool=True) -> 'BubbleTree':
         """Return a BubbleTree instance.
 
         bbllines -- iterable of raw line, bubble-formatted
@@ -215,7 +218,8 @@ class BubbleTree:
         """
         return BubbleTree.from_bubble_data((utils.line_data(line)
                                             for line in bbllines),
-                                           oriented=bool(oriented))
+                                           oriented=bool(oriented),
+                                           symmetric_edges=symmetric_edges)
 
 
     @staticmethod
