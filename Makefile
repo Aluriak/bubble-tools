@@ -25,7 +25,7 @@ dot:
 gexf:
 	$(CMD) gexf bubbles/$(BUBBLE).bbl output/$(BUBBLE).gexf $(ORIENTED)
 js:
-	$(CMD) js bubbles/$(BUBBLE).bbl output/test-site $(ORIENTED) --run
+	$(CMD) js bubbles/$(BUBBLE).bbl output/test-site $(ORIENTED) --render
 js-per-file:
 	# same recipe as above, but with manual recreation of test-site and generation of only graph/code.js
 	- rm -r output/test-site-single-file/

@@ -56,7 +56,7 @@ usage:
     python3 -m bubbletools js path/to/bubble/file path/to/output/dir
 
 Convert given bubble file in a fully working website using cytoscape.js to render the graph.
-The optional `--run` flag can be used to run the default web browser on the generated website.
+The optional `--render` flag can be used to run the default web browser on the generated website.
 See Makefile recipe `js` for a usage example.
 
 A website is a collection of files (css, js, html), with only one of them (`js/graph.js`)
