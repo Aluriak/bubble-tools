@@ -27,10 +27,8 @@ from bubbletools._js_data import (JS_HEADER, JS_MIDDLE, JS_FOOTER, JS_NODE_LINE,
                                   JS_MOUSEOVER_WIDTH_CALLBACKS)
 
 
-FALSE_EDGE_ON_HOVER = True
-
-
-def bbl_to_cys(bblfile:str, width_as_cover:bool=True, show_cover:str='cover: {}'):
+def bbl_to_cys(bblfile:str, oriented:bool=False, width_as_cover:bool=True,
+               show_cover:str='cover: {}', false_edge_on_hover:bool=True):
     """Yield lines of js to write in output file"""
     # False edges in clique
     with open(bblfile) as fd:
@@ -38,7 +36,7 @@ def bbl_to_cys(bblfile:str, width_as_cover:bool=True, show_cover:str='cover: {}'
             (src, trg) for _, src, trg in
             (l.strip().split('\t') for l in fd if l.startswith('FALSEDGE'))
         )
-    if FALSE_EDGE_ON_HOVER:
+    if false_edge_on_hover:
         nodes_in_false_edges = set(itertools.chain.from_iterable(falsedges))
     # Detect incomplete power edges
     with open(bblfile) as fd:
@@ -47,16 +45,16 @@ def bbl_to_cys(bblfile:str, width_as_cover:bool=True, show_cover:str='cover: {}'
             if line.startswith('FALSEPOWEREDGE'):
                 _, seta, setb, src, trg = line.strip().split('\t')
                 falsepoweredges.setdefault(frozenset((seta, setb)), set()).add((src, trg))
-                if FALSE_EDGE_ON_HOVER:
+                if false_edge_on_hover:
                     nodes_in_false_edges.add(src)
                     nodes_in_false_edges.add(trg)
 
     # Build node hierarchy
-    tree = BubbleTree.from_bubble_file(bblfile, symmetric_edges=False)
+    tree = BubbleTree.from_bubble_file(bblfile, symmetric_edges=False, oriented=oriented)
     def isclique(node): return node in tree.edges.get(node, ())
     def handle_node(node, parent=None):
         clique = isclique(node)
-        if FALSE_EDGE_ON_HOVER and clique:
+        if false_edge_on_hover and clique:
             falsedges = ((src, trg) for src, trg in itertools.combinations(tuple(tree.nodes_in(node)), r=2)
                          if src in nodes_in_false_edges and trg in nodes_in_false_edges)
         else: falsedges = ()
@@ -98,7 +96,7 @@ def bbl_to_cys(bblfile:str, width_as_cover:bool=True, show_cover:str='cover: {}'
             yield ' '*8 + JS_EDGE_LINE(source, target, ispower, label=label, attrs=attrs)
 
     # If asked so, add false edges in the file as regular edges
-    if not FALSE_EDGE_ON_HOVER:
+    if not false_edge_on_hover:
         for source, target in falsedges:
             yield ' '*8 + JS_FALSEDGE_LINE(source, target)
         for edges in falsepoweredges.values():
