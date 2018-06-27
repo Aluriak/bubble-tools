@@ -8,15 +8,20 @@ python routines related to bubble format, usable in CLI or as a library.
 See below for usage.
 
 
-## TODO
+## Features
 - [X] bubble to python
-- [ ] python to bubble
 - [X] bubble to [gexf](https://gephi.org/gexf/format/)
-- [ ] bubble to dot  (via [graphviz](http://graphviz.readthedocs.io/en/latest/))
+- [ ] bubble to cytoscape.js
     - [X] working implementation
-    - [ ] unit testing
     - [X] test on fully valid bubble
+    - [ ] unit testing
     - [ ] test on big graphs, for benchmarking (will probably not scale)
+- [ ] bubble to dot (via [graphviz](http://graphviz.readthedocs.io/en/latest/))
+    - [X] working implementation
+    - [X] test on fully valid bubble
+    - [ ] unit testing
+    - [ ] test on big graphs, for benchmarking (will probably not scale)
+- [ ] python to bubble
 - [ ] dot to python
 - [ ] unit testing on bubble describing cliques
 
@@ -27,7 +32,7 @@ See below for usage.
 ### validation
 usage:
 
-    python3 bubble-tool.py validate path/to/bubble/file
+    python3 -m bubbletools validate path/to/bubble/file
 
 Try hard to find errors and inconsistancies in the given bubble file
 
@@ -42,6 +47,24 @@ usage:
 
 Convert given bubble file in dot format.
 The optional `--render` flag can be used to show the graph after saving.
+
+Same API is available for gexf format.
+
+### conversion to cytoscape.js
+usage:
+
+    python3 -m bubbletools js path/to/bubble/file path/to/output/dir
+
+Convert given bubble file in a fully working website using cytoscape.js to render the graph.
+The optional `--run` flag can be used to run the default web browser on the generated website.
+See Makefile recipe `js` for a usage example.
+
+A website is a collection of files (css, js, html), with only one of them (`graph/code.js`)
+that changes according to the input data.
+
+If the `path/to/output/dir` has a `.js` extension, only the `graph/code.js` file will be generated.
+This allow one to generates only the changing parts, not the full website each time.
+See Makefile recipe `js-per-file` for a usage example.
 
 
 ## python API

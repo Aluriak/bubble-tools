@@ -10,6 +10,7 @@ from bubbletools import utils
 
 from bubbletools import _gexf as gexf_converter
 from bubbletools import _bubble as bubble_converter
+from bubbletools import _js as js_converter
 
 
 def bubble_to_dot(bblfile:str, dotfile:str=None, render:bool=False,
@@ -24,6 +25,12 @@ def bubble_to_gexf(bblfile:str, gexffile:str=None, oriented:bool=False):
     tree = BubbleTree.from_bubble_file(bblfile, oriented=bool(oriented))
     gexf_converter.tree_to_file(tree, gexffile)
     return gexffile
+
+
+def bubble_to_js(bblfile:str, jsdir:str=None, oriented:bool=False):
+    """Write in dotfile a graph equivalent to those depicted in bubble file"""
+    js_converter.bubble_to_dir(bblfile, jsdir, oriented=bool(oriented))
+    return jsdir
 
 
 def tree_to_bubble(tree:BubbleTree, bubblefile:str=None):

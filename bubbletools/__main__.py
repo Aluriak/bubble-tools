@@ -4,6 +4,7 @@ usage:
     bubble-tool.py validate <bblfile> [--profiling]
     bubble-tool.py dot <bblfile> [<dotfile>] [--render] [--oriented]
     bubble-tool.py gexf <bblfile> [<gexffile>] [--oriented]
+    bubble-tool.py js <bblfile> <directory> [--oriented] [--run]
 
 """
 
@@ -38,3 +39,13 @@ if __name__ == "__main__":
             args['<gexffile>'],
             oriented=args['--oriented']
         ))
+
+    if args['js']:
+        print('Output file:', converter.bubble_to_js(
+            args['<bblfile>'],
+            jsdir=args['<directory>'],
+            oriented=args['--oriented']
+        ))
+        if args['--run']:
+            import webbrowser
+            webbrowser.open(args['<directory>'] + '/index.html')
