@@ -27,9 +27,9 @@ def bubble_to_gexf(bblfile:str, gexffile:str=None, oriented:bool=False):
     return gexffile
 
 
-def bubble_to_js(bblfile:str, jsdir:str=None, oriented:bool=False):
+def bubble_to_js(bblfile:str, jsdir:str=None, oriented:bool=False, **style):
     """Write in dotfile a graph equivalent to those depicted in bubble file"""
-    js_converter.bubble_to_dir(bblfile, jsdir, oriented=bool(oriented))
+    js_converter.bubble_to_dir(bblfile, jsdir, oriented=bool(oriented), **style)
     return jsdir
 
 

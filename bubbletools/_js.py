@@ -28,7 +28,8 @@ from bubbletools._js_data import (JS_HEADER, JS_MIDDLE, JS_FOOTER, JS_NODE_LINE,
 
 
 def bbl_to_cys(bblfile:str, oriented:bool=False, width_as_cover:bool=True,
-               show_cover:str='cover: {}', false_edge_on_hover:bool=True):
+               show_cover:str='cover: {}', false_edge_on_hover:bool=True,
+               default_poweredge_width:int=5):
     """Yield lines of js to write in output file"""
     # False edges in clique
     with open(bblfile) as fd:
@@ -90,7 +91,7 @@ def bbl_to_cys(bblfile:str, oriented:bool=False, width_as_cover:bool=True,
             ispower = source in powernodes or target in powernodes
             if use_cover:
                 cover = coverof(source, target)
-                label, attrs = labelof(cover), {'width': 2+cover}
+                label, attrs = labelof(cover), {'width': 2+cover if width_as_cover else default_poweredge_width}
             if ispower and frozenset((source, target)) in falsepoweredges:
                 attrs['falsedges'] = list(map(list, falsepoweredges[frozenset((source, target))]))
             yield ' '*8 + JS_EDGE_LINE(source, target, ispower, label=label, attrs=attrs)
@@ -105,13 +106,21 @@ def bbl_to_cys(bblfile:str, oriented:bool=False, width_as_cover:bool=True,
 
     yield from JS_FOOTER
 
-    if FALSE_EDGE_ON_HOVER:
+    if false_edge_on_hover:
         yield from JS_MOUSEOVER_SHOW_CALLBACKS
     else:
         yield from JS_MOUSEOVER_WIDTH_CALLBACKS
 
 
-def bubble_to_dir(bblfile:str, jsdir:str, oriented:bool=False):
+def bubble_to_dir(bblfile:str, jsdir:str, oriented:bool=False, **style):
+    """
+
+    bblfile -- filename containing bubble data
+    jsdir -- a directory in which put the website, or the graph.js to fill
+    oriented -- True if the power graph oriented
+    style -- options for bbl_to_cys
+
+    """
     extension = os.path.splitext(jsdir)[1]
     if not extension:  # it's a directory: copy the directory template and fill it
         if os.path.exists(jsdir):
@@ -125,5 +134,5 @@ def bubble_to_dir(bblfile:str, jsdir:str, oriented:bool=False):
     else:  # it's a file: let's write directly the code in it
         code_js_file = jsdir
     with open(code_js_file, 'w') as fd:
-        for line in bbl_to_cys(bblfile):
+        for line in bbl_to_cys(bblfile, oriented=oriented, **style):
             fd.write(line + '\n')
