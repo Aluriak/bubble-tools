@@ -119,7 +119,8 @@ def bubble_to_dir(bblfile:str, jsdir:str, oriented:bool=False):
         if os.path.exists(jsdir):
             shutil.rmtree(jsdir)
         father_dir = os.path.split(jsdir)[0]
-        assert os.path.isdir(father_dir), '{} must be a directory'.format(father_dir)
+        if father_dir:
+            assert os.path.isdir(father_dir), '{} must be a directory'.format(father_dir)
         template_dir = pkg_resources.resource_filename('bubbletools', '_js_dir_template')
         shutil.copytree(template_dir, jsdir, copy_function=shutil.copy)
         code_js_file = os.path.join(jsdir, 'js/graph.js')
