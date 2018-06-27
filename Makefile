@@ -30,7 +30,7 @@ js-per-file:
 	# same recipe as above, but with manual recreation of test-site and generation of only graph/code.js
 	- rm -r output/test-site-single-file/
 	cp -r bubbletools/_js_dir_template output/test-site-single-file/
-	$(CMD) js bubbles/$(BUBBLE).bbl output/test-site-single-file/graph/code.js $(ORIENTED)
+	$(CMD) js bubbles/$(BUBBLE).bbl output/test-site-single-file/js/graph.js $(ORIENTED)
 	xdg-open output/test-site-single-file/index.html
 
 

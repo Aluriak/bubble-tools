@@ -59,10 +59,10 @@ Convert given bubble file in a fully working website using cytoscape.js to rende
 The optional `--run` flag can be used to run the default web browser on the generated website.
 See Makefile recipe `js` for a usage example.
 
-A website is a collection of files (css, js, html), with only one of them (`graph/code.js`)
+A website is a collection of files (css, js, html), with only one of them (`js/graph.js`)
 that changes according to the input data.
 
-If the `path/to/output/dir` has a `.js` extension, only the `graph/code.js` file will be generated.
+If the `path/to/output/dir` has a `.js` extension, only the `js/graph.js` file will be generated.
 This allow one to generates only the changing parts, not the full website each time.
 See Makefile recipe `js-per-file` for a usage example.
 
