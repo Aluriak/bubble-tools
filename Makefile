@@ -56,3 +56,5 @@ upload:
 install:
 	yes y | pip3 uninstall bubbletools
 	pip3 install bubbletools
+fullrelease:
+	fullrelease
