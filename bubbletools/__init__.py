@@ -3,4 +3,4 @@ from bubbletools.validator import validate
 from bubbletools.bbltree import BubbleTree
 
 
-__version__ = '0.6.7'
+__version__ = '0.6.8.dev0'
