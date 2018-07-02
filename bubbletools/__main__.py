@@ -4,7 +4,7 @@ usage:
     bubble-tool.py validate <bblfile> [--profiling]
     bubble-tool.py dot <bblfile> [<dotfile>] [--render] [--oriented]
     bubble-tool.py gexf <bblfile> [<gexffile>] [--oriented]
-    bubble-tool.py js <bblfile> <directory> [--oriented] [--run] [<style>...]
+    bubble-tool.py js <bblfile> <directory> [--oriented] [--render] [<style>...]
 
 """
 

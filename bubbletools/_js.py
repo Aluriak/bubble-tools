@@ -125,7 +125,7 @@ def bubble_to_dir(bblfile:str, jsdir:str, oriented:bool=False, **style):
     if not extension:  # it's a directory: copy the directory template and fill it
         if os.path.exists(jsdir):
             shutil.rmtree(jsdir)
-        father_dir = os.path.split(jsdir)[0]
+        father_dir = os.path.split(jsdir.rstrip('/'))[0]
         if father_dir:
             assert os.path.isdir(father_dir), '{} must be a directory'.format(father_dir)
         template_dir = pkg_resources.resource_filename('bubbletools', '_js_dir_template')
