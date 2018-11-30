@@ -72,11 +72,11 @@ def inclusions_validation(tree:BubbleTree) -> iter:
                 yield ("ERROR inconsistency in inclusions: {} is both"
                        " included and not included in {}.".format(one, two))
         if len(common_inc) > 0:  # one and two are not disjoint
-            if len(common_inc) == two_inc or len(common_inc) == two_inc:
+            if len(common_inc) == len(one_inc) or len(common_inc) == len(two_inc):
                 # one is included in the other
                 pass
             else:  # problem: some nodes are shared, but not all
-                yield ("ERROR overlapping powernodes:"
+                yield ("ERROR OVERLAPPING powernodes:"
                        " {} nodes are shared by {} and {},"
                        " which are not in inclusion."
                        " Shared nodes are {}".format(
