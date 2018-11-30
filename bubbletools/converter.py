@@ -21,14 +21,14 @@ def bubble_to_dot(bblfile:str, dotfile:str=None, render:bool=False,
 
 
 def bubble_to_gexf(bblfile:str, gexffile:str=None, oriented:bool=False):
-    """Write in dotfile a graph equivalent to those depicted in bubble file"""
+    """Write in bblfile a graph equivalent to those depicted in bubble file"""
     tree = BubbleTree.from_bubble_file(bblfile, oriented=bool(oriented))
     gexf_converter.tree_to_file(tree, gexffile)
     return gexffile
 
 
 def bubble_to_js(bblfile:str, jsdir:str=None, oriented:bool=False, **style):
-    """Write in dotfile a graph equivalent to those depicted in bubble file"""
+    """Write in jsdir a graph equivalent to those depicted in bubble file"""
     js_converter.bubble_to_dir(bblfile, jsdir, oriented=bool(oriented), **style)
     return jsdir
 
