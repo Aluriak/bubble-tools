@@ -22,11 +22,29 @@ BUBBLE_DATA = (
     ('SET', 'p1'),
     ('SET', 'p3'),
 )
+BUBBLE_TRIPLE_INCLUSION = (
+    ('EDGE', 'd', 'p1'),
+    ('EDGE', 'e', 'p2'),
+    ('EDGE', 'f', 'p3'),
+    ('IN', 'a', 'p1'),
+    ('IN', 'b', 'p2'),
+    ('IN', 'c', 'p3'),
+    ('IN', 'p2', 'p1'),
+    ('IN', 'p3', 'p2'),
+    ('SET', 'p1'),
+    ('SET', 'p2'),
+    ('SET', 'p3'),
+)
 
 
 @pytest.fixture
 def powergraph():
     return bbltree.BubbleTree.from_bubble_data(BUBBLE_DATA)
+
+@pytest.fixture
+def triple_inclusion():
+    return bbltree.BubbleTree.from_bubble_data(BUBBLE_TRIPLE_INCLUSION)
+
 
 @pytest.fixture
 def oriented_powergraph():
@@ -59,6 +77,13 @@ def test_powernodes_containing(powergraph):
 def test_no_powernode_data(powergraph):
     with pytest.raises(ValueError):
         powergraph.powernode_data('k')
+
+
+def test_complex_inclusions(triple_inclusion):
+    assert triple_inclusion.inclusions == {
+        'p1': {'a', 'p2'}, 'p2': {'b', 'p3'}, 'p3': {'c'},
+        'a': (), 'b': (), 'c': (), 'd': (), 'e': (), 'f': ()
+    }
 
 
 def test_from_bubble_data(powergraph):
