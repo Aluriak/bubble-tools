@@ -116,12 +116,14 @@ def bubble_to_dir(bblfile:str, jsdir:str, oriented:bool=False, **style):
     """
 
     bblfile -- filename containing bubble data
-    jsdir -- a directory in which put the website, or the graph.js to fill
+    jsdir -- a directory in which put the website, or the graph.js to fill,
+             or the .html to fill with everything
     oriented -- True if the power graph oriented
     style -- options for bbl_to_cys
 
     """
     extension = os.path.splitext(jsdir)[1]
+    mode = 'w'
     if not extension:  # it's a directory: copy the directory template and fill it
         if os.path.exists(jsdir):
             shutil.rmtree(jsdir)
@@ -131,8 +133,20 @@ def bubble_to_dir(bblfile:str, jsdir:str, oriented:bool=False, **style):
         template_dir = pkg_resources.resource_filename('bubbletools', '_js_dir_template')
         shutil.copytree(template_dir, jsdir, copy_function=shutil.copy)
         code_js_file = os.path.join(jsdir, 'js/graph.js')
+    elif extension == '.html':  # write everything in a single file
+        code_js_file, mode = jsdir, 'a'
+        template_dir = pkg_resources.resource_filename('bubbletools', '_js_dir_template')
+        with open(code_js_file, 'w') as ofd, open(template_dir+'/index.html') as hfd:
+            basehtml = hfd.read()
+            script_to_replace = '<script src="js/graph.js"></script>'
+            start = basehtml.find(script_to_replace)
+            stop = start + len(script_to_replace)
+            ofd.write(basehtml[:start].strip() + '\n<script>')
     else:  # it's a file: let's write directly the code in it
         code_js_file = jsdir
-    with open(code_js_file, 'w') as fd:
+    with open(code_js_file, mode) as fd:
         for line in bbl_to_cys(bblfile, oriented=oriented, **style):
             fd.write(line + '\n')
+    if extension == '.html':
+        with open(code_js_file, 'a') as fd:
+            fd.write('</script>' + basehtml[stop:])

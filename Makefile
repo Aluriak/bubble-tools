@@ -24,6 +24,9 @@ dot:
 	$(CMD) dot bubbles/$(BUBBLE).bbl output/$(BUBBLE).dot $(OPT)
 gexf:
 	$(CMD) gexf bubbles/$(BUBBLE).bbl output/$(BUBBLE).gexf $(ORIENTED)
+embedded-js:
+	# generate only one html file
+	$(CMD) js bubbles/$(BUBBLE).bbl output/js-single-file.html $(ORIENTED) --render width_as_cover=True
 js:
 	$(CMD) js bubbles/$(BUBBLE).bbl output/test-site $(ORIENTED) --render width_as_cover=True
 js-per-file:
@@ -31,7 +34,7 @@ js-per-file:
 	- rm -r output/test-site-single-file/
 	cp -r bubbletools/_js_dir_template output/test-site-single-file/
 	$(CMD) js bubbles/$(BUBBLE).bbl output/test-site-single-file/js/graph.js $(ORIENTED)
-	xdg-open output/test-site-single-file/index.html
+	xdg-open ./output/test-site-single-file/index.html
 
 
 t: tests

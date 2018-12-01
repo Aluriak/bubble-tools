@@ -61,5 +61,10 @@ if __name__ == "__main__":
             **style_args
         ))
         if args['--render']:
+            import os
             import webbrowser
-            webbrowser.open(args['<directory>'] + '/index.html')
+            single_js_file = os.path.splitext(args['<directory>'])[1] == '.html'
+            uri = os.path.join(os.getcwd(), args['<directory>']
+                               + ('' if single_js_file else '/index.html'))
+            print(f'OPENING "{uri}" in browser…')
+            webbrowser.open(uri)
