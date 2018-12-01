@@ -56,7 +56,7 @@ def JS_EDGE_LINE(source:str, target:str, ispoweredge:bool, isreflexive:bool=Fals
 def JS_FALSEDGE_LINE(source:str, target:str, id:str or int='') -> str:
     """
 
-    >>> JS_EDGE_LINE('a', 'b')
+    >>> JS_FALSEDGE_LINE('a', 'b')
     "        { data: { source: 'a', target: 'b', type: 'falsedge' } },"
 
     """

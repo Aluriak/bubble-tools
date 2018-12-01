@@ -76,7 +76,7 @@ def inclusions_validation(tree:BubbleTree) -> iter:
                 # one is included in the other
                 pass
             else:  # problem: some nodes are shared, but not all
-                yield ("ERROR OVERLAPPING powernodes:"
+                yield ("ERROR overlapping powernodes:"
                        " {} nodes are shared by {} and {},"
                        " which are not in inclusion."
                        " Shared nodes are {}".format(
