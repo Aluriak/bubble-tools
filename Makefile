@@ -59,5 +59,7 @@ upload:
 install:
 	yes y | pip3 uninstall bubbletools
 	pip3 install bubbletools
+install_deps:
+	python -c "import configparser; c = configparser.ConfigParser(); c.read('setup.cfg'); print(c['options']['install_requires'])" | xargs pip install -U
 fullrelease:
 	fullrelease

@@ -1,5 +1,5 @@
-include LICENSE MANIFEST.in requirements.txt README.md
+include MANIFEST.in README.md
 recursive-include bubbletools/_js_dir_template *
 prune bubbles
 prune output
-exclude Makefile
+exclude Makefile LICENSE
