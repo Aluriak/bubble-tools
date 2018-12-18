@@ -27,7 +27,7 @@ See below for usage.
 
 
 ## CLI
-`bubble-tools` is usable through CLI.
+`bubbletools` is usable through CLI.
 
 ### validation
 usage:
@@ -43,7 +43,7 @@ Profiling gives general informations about the file data.
 ### conversion to dot
 usage:
 
-    python3 bubble-tool.py dot path/to/bubble/file path/to/output/file
+    python3 bubbletool.py dot path/to/bubble/file path/to/output/file
 
 Convert given bubble file in dot format.
 The optional `--render` flag can be used to show the graph after saving.
