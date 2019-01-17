@@ -119,21 +119,21 @@ def included(powernode:str, inclusions:dict, nodes_only=False) -> iter:
 
 def mergeability_validation(tree:BubbleTree) -> iter:
     """Yield message about mergables powernodes"""
-    def gen_warnings(one, two, inc_message='in the same level (under {parent})'):
+    def gen_warnings(one, two, inc_message:str) -> [str]:
         "Yield the warning for given (power)nodes if necessary"
         nodetype = ''
-        if tree.inclusions[one] and tree.inclusions[one]:
+        if tree.inclusions[one] and tree.inclusions[two]:
             nodetype = 'power'
-        elif tree.inclusions[one] or tree.inclusions[one]:
+        elif tree.inclusions[one] or tree.inclusions[two]:
             nodetype = '(power)'
         if one > two:  one, two = two, one
         shared = set(tree.edges.get(one, ())) & set(tree.edges.get(two, ()))
         if shared:
             yield (f"WARNING mergeable {nodetype}nodes: {one} and {two}"
-                   f" are {inc_message.format(parent=parent)}, and share"
+                   f" are {inc_message}, and share"
                    f" {len(shared)} neigbor{'s' if len(shared) > 1 else ''}")
     for one, two in it.combinations(tree.roots, 2):
         yield from gen_warnings(one, two, inc_message='both roots')
     for parent, childs in tree.inclusions.items():
         for one, two in it.combinations(childs, 2):
-            yield from gen_warnings(one, two)
+            yield from gen_warnings(one, two, inc_message=f'in the same level (under {parent})')
