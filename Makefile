@@ -39,7 +39,7 @@ js-per-file:
 
 t: tests
 tests:
-	pytest bubbletools/ -vv --doctest-module
+	python -m pytest bubbletools/ -vv --doctest-module
 
 
 ##########################################
